@@ -14,6 +14,7 @@
                     $usuario = $result->fetch_object();
                     $_SESSION['id_user'] = $usuario->id_user;
                     $_SESSION['nombre_user'] = $usuario->nombre;
+                    $_SESSION['rol_user'] = $usuario->rol;
                     $buscado = true;
                 }
             }
