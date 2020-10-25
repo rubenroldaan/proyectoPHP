@@ -2,10 +2,6 @@
     font-family: "Alegreya";
     src: url("fonts/Alegreya-Regular.ttf")
 }
-
-html {
-    position: relative;
-}
 .header {
     background-color: lightblue;
     width: 100%;
@@ -103,4 +99,9 @@ div#errorLog {
 h2.text-center-nologin {
     width: 70%;
     text-align: right;
+}
+
+.tablaIncidencias {
+    text-align:center;
+    border-collapse:collapse;
 }
