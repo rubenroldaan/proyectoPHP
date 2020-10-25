@@ -7,6 +7,9 @@
 -- Versión del servidor: 10.4.13-MariaDB
 -- Versión de PHP: 7.4.7
 
+
+CREATE DATABASE IF NOT EXISTS accidentao CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
