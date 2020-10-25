@@ -1,6 +1,6 @@
 <?php
 
-    class Incidencias {
+    class Incidencia {
         private $db;
 
         public function __construct() {
@@ -16,5 +16,17 @@
                 }
             }
             return $buscado;
+        }
+
+        public function getAll() {
+            $arrayResult = array();
+            if ($result = $this->db->query("SELECT * FROM incidencias")) {
+                while ($fila = $result->fetch_object()) {
+                    $arrayResult[] = $fila;
+                }
+            } else {
+                $arrayResult = null;
+            }
+            return $arrayResult;
         }
     }

@@ -1,12 +1,13 @@
 <div id="login">
+    
     <h2 class="text-center">Iniciar sesión en Accidentao'</h2>
     <div class="container">
         <?php
             if (isset($data['msjError'])) {
-                echo "<p style='color:red'>".$data['msjError']."</p>";
+                echo "<p style='color:red;text-align:center'>".$data['msjError']."</p>";
             }
             if (isset($data['msjInfo'])) {
-                echo "<p style='color:blue'>".$data['msjInfo']."</p>";
+                echo "<p style='color:blue;text-align:center'>".$data['msjInfo']."</p>";
             }
         ?>
 

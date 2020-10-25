@@ -3,6 +3,9 @@
     src: url("fonts/Alegreya-Regular.ttf")
 }
 
+html {
+    position: relative;
+}
 .header {
     background-color: lightblue;
     width: 100%;
@@ -65,11 +68,39 @@ h2.text-center {
     z-index: 0;
     position: absolute;
     bottom: 0;
-    left: 0;
-    right: 0;
 }
 
 .footer table {
     position: relative;
     left: 35%;
+}
+
+.aaa {
+    width: 10%;
+    height: 10%;
+}
+
+.errorLog {
+    position: relative;
+    left: 50%;
+}
+
+img.buttonLogin {
+    width: 10px;
+    height: 10px;
+}
+
+.buttonLogout {
+    width: 10px;
+    height: 10px;
+}
+
+div#errorLog {
+    position: relative;
+    left: 350px;
+}
+
+h2.text-center-nologin {
+    width: 70%;
+    text-align: right;
 }
