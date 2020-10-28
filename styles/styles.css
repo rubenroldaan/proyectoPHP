@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Alegreya";
-    src: url("fonts/Alegreya-Regular.ttf")
+    src: url("fonts/Alegreya-Regular.ttf");
 }
 .header {
     background-color: lightblue;
@@ -68,7 +68,10 @@ h2.text-center {
 
 .footer table {
     position: relative;
-    left: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    padding-right: 10px;
 }
 
 .aaa {
@@ -81,14 +84,16 @@ h2.text-center {
     left: 50%;
 }
 
-img.buttonLogin {
-    width: 10px;
-    height: 10px;
+#logout {
+    width:100%;
+    position:relative;
+    text-align:right;
+    top:-65px;
 }
 
-.buttonLogout {
-    width: 10px;
-    height: 10px;
+#buttonLogout {
+    width: 100px;
+    height: 100px;
 }
 
 div#errorLog {
@@ -101,7 +106,26 @@ h2.text-center-nologin {
     text-align: right;
 }
 
+.theadIncidencias td.thead1 {
+    background: #ea6153;
+}
+
 .tablaIncidencias {
-    text-align:center;
-    border-collapse:collapse;
+    margin: 0 0 40px 0;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    display: table;
+    text-align: center;
+}
+
+.bienvenida {
+    position: absolute;
+    top: 27%;
+
+}
+
+.cuerpoIncidencias td {
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    background: #beb9b9;
 }

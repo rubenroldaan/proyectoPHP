@@ -50,4 +50,8 @@
             $data['listaIncidencias'] = $this->incidencia->getAll();
             $this->vista->mostrar("incidencias/listaIncidencias", $data);
         }
+
+        public function modificarIncidencia() {
+            
+        }
     }

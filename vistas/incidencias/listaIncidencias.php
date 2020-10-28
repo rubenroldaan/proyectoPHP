@@ -3,28 +3,27 @@
 <?php
     if (isset($_SESSION['id_user'])) {
         echo '<h2 class="text-center">Incidencias</h2>';
-        echo '<div id="buttonLogout" style="width:100%;position:relative;text-align:right;top:-65px">
+        echo '<div id="logout">
                 <a href="index.php?action=cerrarSesion">
-                    <img src="imgs/logout.png" alt="Cerrar sesión" title="Cerrar sesión" class="buttonLogout" style="position:relative;
-                                                                                                                     width:70px;
-                                                                                                                     left:0%;">
+                    <img src="imgs/logout.png" alt="Cerrar sesión" title="Cerrar sesión" id="buttonLogout">
                 </a>
                </div>';
-        echo '<p>Hola '.$_SESSION['nombre_user'].'</p>';
+        echo '<div class="bienvenida"><p>Hola '.$_SESSION['nombre_user'].'</p></div>';
         echo '<table border="1px solid black" class="tablaIncidencias">';
-        echo '<thead>';
+        echo '<thead class="theadIncidencias">';
         echo '<tr>';
-        echo '<td>Fecha</td>';
-        echo '<td>Lugar</td>';
-        echo '<td>Equipo afectado</td>';
-        echo '<td>Descripción</td>';
-        echo '<td>Observaciones</td>';
-        echo '<td>Estado</td>';
+        echo '<td class="thead1">Fecha</td>';
+        echo '<td class="thead1">Lugar</td>';
+        echo '<td class="thead1">Equipo afectado</td>';
+        echo '<td class="thead1">Descripción</td>';
+        echo '<td class="thead1">Observaciones</td>';
+        echo '<td class="thead1">Estado</td>';
         if ($_SESSION['rol_user'] == 1) {
-            echo '<td>Usuario</td>';
+            echo '<td class="thead1">Usuario</td>';
         }
+        echo '<td colspan="2" style="opacity:0;background-color: transparent;border:none;"></td>';
         echo '</thead>';
-        echo '<tbody>';
+        echo '<tbody class="cuerpoIncidencias">';
         foreach($data['listaIncidencias'] as $incidencia) {
             echo '<tr>';
             echo '<td>'. $incidencia->fecha .'</td>';
@@ -36,6 +35,8 @@
             if ($_SESSION['rol_user'] == 1) {
                 echo '<td>'. $incidencia->id_user .'</td>';
             }
+            echo '<td><a href="index.php?action=modificarIncidencia&id_incidencia='.$incidencia->id_incidencia.'">Modificar</a></td>';
+            echo '<td><a href="index.php?action=cerrarIncidencia&id_incidencia='.$incidencia->id_incidencia.'">Cerrar</a></td>';
             echo '</tr>';
         }
         echo '</tbody>';
