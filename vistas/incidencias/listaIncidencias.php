@@ -8,18 +8,38 @@
                     <img src="imgs/logout.png" alt="Cerrar sesión" title="Cerrar sesión" id="buttonLogout">
                 </a>
                </div>';
-        echo '<div class="bienvenida"><p>Hola '.$_SESSION['nombre_user'].'</p></div>';
-        echo '<table border="1px solid black" class="tablaIncidencias">';
+        echo '<div class="bienvenida"><p>Hola <strong>'.$_SESSION['nombre_user'].'</strong></p></div>';
+        if (isset($data['msjError'])) {
+            echo '<p class="mensajeError">'.$data['msjError'].'</p>';
+        }
+        if (isset($data['msjInfo'])) {
+            echo '<p class="mensajeInfo"><strong>'.$data['msjInfo'].'<strong></p>';
+        }
+        echo '<div id="crearIncidencia">
+                <a href="index.php?action=formularioInsertarIncidencia">
+                    <img src="imgs/button-new.png" alt="Añadir incidencia" title="Nueva incidencia" id="botonCrearIncidencia">
+                </a>
+              </div>';
+        if ($_SESSION['rol_user'] == 1) {
+            echo '<div class="divSearch">
+                    <form class="search" action="index.php">
+                        <input type="text" class="inputBusqueda" name="texto_busqueda" placeholder="Búsqueda por fecha, lugar...">
+                        <input type="hidden" name="action" value="buscarIncidencia">
+                        <input type="image" title="Buscar" alt="Botón enviar" src="imgs/lupa.png" class="lupa">
+                    </form>
+                  </div>';
+        }
+        echo '<table class="tablaIncidencias" cellspacing="0">';
         echo '<thead class="theadIncidencias">';
         echo '<tr>';
-        echo '<td class="thead1">Fecha</td>';
-        echo '<td class="thead1">Lugar</td>';
-        echo '<td class="thead1">Equipo afectado</td>';
-        echo '<td class="thead1">Descripción</td>';
-        echo '<td class="thead1">Observaciones</td>';
-        echo '<td class="thead1">Estado</td>';
+        echo '<td class="thead1">FECHA</td>';
+        echo '<td class="thead1">LUGAR</td>';
+        echo '<td class="thead1">EQUIPO AFECTADO</td>';
+        echo '<td class="thead1">DESCRIPCION</td>';
+        echo '<td class="thead1">OBSERVACIONES</td>';
+        echo '<td class="thead1">ESTADO</td>';
         if ($_SESSION['rol_user'] == 1) {
-            echo '<td class="thead1">Usuario</td>';
+            echo '<td class="thead1">USUARIO</td>';
         }
         echo '<td colspan="2" style="opacity:0;background-color: transparent;border:none;"></td>';
         echo '</thead>';
@@ -35,8 +55,11 @@
             if ($_SESSION['rol_user'] == 1) {
                 echo '<td>'. $incidencia->id_user .'</td>';
             }
-            echo '<td><a href="index.php?action=modificarIncidencia&id_incidencia='.$incidencia->id_incidencia.'">Modificar</a></td>';
-            echo '<td><a href="index.php?action=cerrarIncidencia&id_incidencia='.$incidencia->id_incidencia.'">Cerrar</a></td>';
+            echo '<td><a href="index.php?action=formModificarIncidencia&id_incidencia='.$incidencia->id_incidencia.'&id_user='.$_SESSION['id_user'].'">
+                  <img src="imgs/button-edit.png" id="buttonEdit" alt="Modificar incidencia" title="Modificar incidencia"></a></td>';
+            if ($_SESSION['rol_user'] == 1) {
+                echo '<td><a href="index.php?action=borrarIncidencia&id_incidencia='.$incidencia->id_incidencia.'&id_user='.$_SESSION['id_user'].'">Borrar</a></td>';
+            }
             echo '</tr>';
         }
         echo '</tbody>';

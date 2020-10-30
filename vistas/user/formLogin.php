@@ -1,5 +1,4 @@
 <div id="login">
-    
     <h2 class="text-center">Iniciar sesión en Accidentao'</h2>
     <div class="container">
         <?php

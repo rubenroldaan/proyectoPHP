@@ -13,11 +13,9 @@
     if (isset($_SESSION['id_user'])) {
         echo '<table id="button">
                <tr>
-                <td>Inicio</td>
-                <td>Sobre nosotros</td>
-                <td>Servicios</td>
-                <td>Productos</td>
-                <td>contacto</td>
+                <td><a href="index.php?action=creditos">Créditos</a></td>
+                <td>Política de privacidad</td>
+                <td>Cookies</td>
                </tr>
               </table>';
     }

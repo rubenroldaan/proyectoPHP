@@ -58,12 +58,9 @@ h2.text-center {
 }
 
 .footer {
-    background-color: lightblue;
-    width: 100%;
+    
+    width: 99.6%;
     height: 100px;
-    z-index: 0;
-    position: absolute;
-    bottom: 0;
 }
 
 .footer table {
@@ -92,8 +89,8 @@ h2.text-center {
 }
 
 #buttonLogout {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
 }
 
 div#errorLog {
@@ -108,19 +105,22 @@ h2.text-center-nologin {
 
 .theadIncidencias td.thead1 {
     background: #ea6153;
+    border: 1px solid black;
+    font-weight: bold;
 }
 
 .tablaIncidencias {
     margin: 0 0 40px 0;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     display: table;
     text-align: center;
+    border: none;
 }
 
 .bienvenida {
     position: absolute;
-    top: 27%;
+    top: 15%;
+    font-size: 30px;
 
 }
 
@@ -128,4 +128,89 @@ h2.text-center-nologin {
     margin-bottom: 10px;
     padding: 6px 12px;
     background: #beb9b9;
+    border: 1px solid black;
+    border-spacing: 0px;
+}
+
+p.mensajeInfo {
+    color: royalblue;
+}
+
+p.mensajeError {
+    color:red;
+}
+
+img#botonCrearIncidencia {
+    width: 50px;
+    height: 50px;
+}
+
+img#buttonEdit {
+    width: 55px;
+    height: 30px;
+}
+
+#crearIncidencia {
+    display: inline;
+}
+
+.divSearch {
+    float: right;
+}
+
+.inputBusqueda {
+    border-radius: 3px;
+    border: 1px solid black;
+    width: 250px;
+    height: 30px;
+}
+
+.lupa {
+    width: 30px;
+    height: 30px;
+    position: relative;
+    bottom: -10px;
+}
+
+.formUpdate {
+    position: relative;
+    left: 40%;
+}
+
+.formUpdate input[type="submit"] {
+    position: relative;
+    left: 2%;
+    border-radius: 6px;
+    width: 200px;
+}
+
+.formUpdate input[type="submit"]:hover {
+    background-color: black;
+    color: white;
+}
+
+.formInsertarIncidencia {
+    position: relative;
+    left: 40%;
+}
+
+.formInsertarIncidencia input[type="submit"] {
+    position: relative;
+    left: 2%;
+    border-radius: 6px;
+    width: 200px;
+}
+
+.formInsertarIncidencia input[type="submit"]:hover {
+    background-color: black;
+    color: white;
+}
+
+div#volver {
+    float: right;
+}
+
+.botonVolver {
+    width: 50px;
+    height: 50px;
 }
