@@ -2,6 +2,7 @@
     font-family: "Alegreya";
     src: url("fonts/Alegreya-Regular.ttf");
 }
+
 .header {
     background-color: lightblue;
     width: 100%;
@@ -117,6 +118,23 @@ h2.text-center-nologin {
     border: none;
 }
 
+.tablaUsuarios {
+    text-align: center;
+    background-color: white;
+    border-radius: 6px;
+    font-size: 22px;
+    margin: auto auto 40px auto;
+    width: 80%;
+    display: table;
+    border: none;
+}
+
+.theadUsuarios {
+    font-weight: bold;
+}
+
+
+
 .bienvenida {
     position: absolute;
     top: 15%;
@@ -204,19 +222,19 @@ img#buttonEdit {
     color: white;
 }
 
-.formInsertarIncidencia {
+.formInsertar {
     position: relative;
     left: 40%;
 }
 
-.formInsertarIncidencia input[type="submit"] {
+.formInsertar input[type="submit"] {
     position: relative;
     left: 2%;
     border-radius: 6px;
     width: 200px;
 }
 
-.formInsertarIncidencia input[type="submit"]:hover {
+.formInsertar input[type="submit"]:hover {
     background-color: black;
     color: white;
 }
@@ -232,5 +250,10 @@ div#volver {
 
 #botonBorrar {
     width: 40px;
+    height: 30px;
+}
+
+#botonCerrarIncidencia {
+    width: 30px;
     height: 30px;
 }

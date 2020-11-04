@@ -2,7 +2,7 @@
 
 <?php
     if (isset($_SESSION['id_user'])) {
-        echo '<h2 class="text-center">Incidencias</h2>';
+        echo '<h2 class="text-center">Gestión de Incidencias</h2>';
         echo '<div id="logout">
                 <a href="index.php?action=cerrarSesion">
                     <img src="imgs/logout.png" alt="Cerrar sesión" title="Cerrar sesión" id="buttonLogout">
@@ -55,6 +55,8 @@
             if ($_SESSION['rol_user'] == 1) {
                 echo '<td>'. $incidencia->id_user .'</td>';
             }
+            echo '<td><a href="index.php?action=cerrarIncidencia&id_incidencia='.$incidencia->id_incidencia.'">
+                  <img src="imgs/cerrarIncidencia.png" id="botonCerrarIncidencia" alt="Cerrar incidencia" title="Cerrar incidencia"></td>';
             echo '<td><a href="index.php?action=formModificarIncidencia&id_incidencia='.$incidencia->id_incidencia.'&id_user='.$_SESSION['id_user'].'">
                   <img src="imgs/button-edit.png" id="buttonEdit" alt="Modificar incidencia" title="Modificar incidencia"></a></td>';
             if ($_SESSION['rol_user'] == 1) {

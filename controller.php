@@ -34,7 +34,6 @@
             $result = $this->user->buscarUser($usr,$passwd);
 
             if ($result) {
-                // PARA QUITAR
                 $this->mostrarListaIncidencias();
             } else {
                 // Error al iniciar la sesión
@@ -96,11 +95,21 @@
             $descripcion = $_REQUEST['descripcion'];
             $observaciones = $_REQUEST['observaciones'];
             $estado = $_REQUEST['estado'];
+            $prioridad = "";
+            if ($_SESSION['rol_user'] == 1)
+                $prioridad = $_REQUEST['prioridad'];
+            else
+                $prioridad = 'media';
 
-            $result = $this->incidencia->update($id_incidencia,$fecha,$lugar,$equipo_afectado,$descripcion,$observaciones,$estado);
+            $result = $this->incidencia->update($id_incidencia,$fecha,$lugar,$equipo_afectado,$descripcion,$observaciones,$estado,$prioridad);
 
+            if ($result == 1) {
+                $data['msjInfo'] = "Incidencia modificada con éxito.";
+            } else {
+                $data['msjError'] = "No se ha podido modificar la incidencia. Inténtelo de nuevo más tarde.";
+            }
             $data['listaIncidencias'] = $this->incidencia->getAll();
-            $this->mostrarListaIncidencias();
+            $this->vista->mostrar("incidencias/listaIncidencias",$data);
         }
 
         public function borrarIncidencia() {
@@ -153,7 +162,8 @@
                 $data['msjError'] = "Ha ocurrido un error al crear la incidencia. Por favor, inténtelo más tarde";
             }
 
-            $data['listaIncidencias'] = $this->mostrarListaIncidencias();
+            $data['listaIncidencias'] = $this->incidencia->getAll();
+             $this->mostrarListaIncidencias();
 
         }
 
@@ -166,5 +176,140 @@
 
         public function creditos() {
             $this->vista->mostrar("creditos");
+        }
+
+        public function cerrarIncidencia() {
+            $id_incidencia = $_REQUEST['id_incidencia'];
+
+            $result = $this->incidencia->cerrarIncidencia($id_incidencia);
+
+            if ($result == 1) {
+                $data['msjInfo'] = 'Incidencia cerrada con éxito';
+            } else {
+                $data['msjError'] = 'No se pudo cerrar la incidencia. Inténtelo de nuevo más tarde';
+            }
+            $this->mostrarListaIncidencias();
+        }
+
+        public function gestionUsuarios() {
+            if (isset($_SESSION['id_user'])) {
+                if ($_SESSION['rol_user'] == 1) {
+                    $data['listaUsuarios'] = $this->user->getAll();
+                    $this->vista->mostrar("user/listaUsuarios",$data);
+                } else {
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
+                }
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
+
+        }
+
+        public function formularioInsertarUsuario() {
+            if (isset($_SESSION['id_user'])) {
+                if ($_SESSION['rol_user'] == 1) {
+                    $this->vista->mostrar("user/formularioInsertarUsuarios");
+                } else {
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
+                }
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
+        }
+
+        public function nuevoUsuario() {
+            if (isset($_SESSION['id_user'])) {
+                $nombre = $_REQUEST['nombre'];
+                $passwd = $_REQUEST['passwd'];
+                $correo = $_REQUEST['correo'];
+                $rol = $_REQUEST['rol'];
+
+                $result = $this->user->insert($nombre, $passwd, $correo, $rol);
+
+                if ($result == 1) {
+                    $data['msjInfo'] = 'Usuario creado con éxito';
+                } else {
+                    $data['msjError'] = 'No se ha podido crear el usuario. Inténtelo de nuevo más tarde.';
+                }
+
+                $data['listaUsuarios'] = $this->user->getAll();
+                $this->vista->mostrar("user/listaUsuarios",$data);
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
+        }
+
+        public function borrarUsuario() {
+            if (isset($_SESSION['id_user'])) {
+                if ($_SESSION['rol_user'] == 1) {
+                    $id_user = $_REQUEST['id_user'];
+                    $result = $this->user->delete($id_user);
+                    if ($result == 1) {
+                        $data['msjInfo'] = 'Usuario borrado con éxito';
+                    } else {
+                        $data['msjError'] = 'No se ha podido eliminar el usuario. Por favor inténtelo de nuevo.';
+                    }
+                    $data['listaUsuarios'] = $this->user->getAll();
+                    $this->vista->mostrar("user/listaUsuarios",$data);
+                } else {
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
+                }
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
+            
+        }
+
+        public function formModificarUsuario() {
+            if (isset($_SESSION['id_user'])) {
+                if ($_SESSION['rol_user'] == 1) {
+                    $user = $_REQUEST['id_user'];
+                    if ($data['user'] = $this->user->get($user)) {
+                        $this->vista->mostrar("user/formularioModificarUsuario",$data);
+                    }
+                } else {
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
+                }
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
+        }
+
+        public function modificarUsuario() {
+            if (isset($_SESSION['id_user'])) {
+                if ($_SESSION['rol_user'] == 1) {
+                    $id_user = $_REQUEST['id_user'];
+                    $nombre = $_REQUEST['nombre'];
+                    $passwd = $_REQUEST['passwd'];
+                    $correo = $_REQUEST['correo'];
+                    $rol = $_REQUEST['rol'];
+
+                    $result = $this->user->update($id_user,$nombre,$passwd,$correo,$rol);
+
+                    if ($result == 1) {
+                        $data['msjInfo'] = 'Usuario modificado con éxito';
+                    } else {
+                        $data['msjError'] = 'No se ha podido modificar el usuario. Inténtelo de nuevo más tarde.';
+                    }
+
+                    $data['listaUsuarios'] = $this->user->getAll();
+                    $this->vista->mostrar("user/listaUsuarios",$data);
+                } else {
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
+                }
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
         }
     }

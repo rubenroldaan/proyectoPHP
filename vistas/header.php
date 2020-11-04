@@ -13,10 +13,11 @@
     if (isset($_SESSION['id_user'])) {
         echo '<table id="button">
                <tr>
-                <td><a href="index.php?action=creditos">Créditos</a></td>
-                <td>Política de privacidad</td>
-                <td>Cookies</td>
-               </tr>
+                <td><a href="index.php?action=mostrarListaIncidencias">Incidencias</a></td>';
+                if ($_SESSION['rol_user'] == 1) {
+                    echo '<td><a href="index.php?action=gestionUsuarios">Usuarios</a></td>';
+                }
+               echo '</tr>
               </table>';
     }
 ?>                 
