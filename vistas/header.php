@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="header" id="header" align="center">
-    <img src="imgs/logo.png" alt="Logo de Accidentao" width="300px" height="100px" class="img_logo">       
+    <a href="index.php"><img src="imgs/logo.png" alt="Logo de Accidentao" width="300px" height="100px" class="img_logo"></a>
 <?php
     if (isset($_SESSION['id_user'])) {
         echo '<table id="button">

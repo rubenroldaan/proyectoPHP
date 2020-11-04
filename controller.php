@@ -35,7 +35,7 @@
 
             if ($result) {
                 // PARA QUITAR
-                echo "<script>location.href = 'index.php?action=mostrarListaIncidencias'</script>";
+                $this->mostrarListaIncidencias();
             } else {
                 // Error al iniciar la sesión
                 $data['msjError'] = "Nombre de usuario o contraseña incorrectos";

@@ -127,9 +127,24 @@ h2.text-center-nologin {
 .cuerpoIncidencias td {
     margin-bottom: 10px;
     padding: 6px 12px;
-    background: #beb9b9;
-    border: 1px solid black;
+    
     border-spacing: 0px;
+}
+
+tr.alta {
+    background-color: rgb(245, 51, 51);
+}
+
+tr.media {
+    background-color: orange;
+}
+
+tr.baja {
+    background-color: yellow;
+}
+
+tr.cerrada {
+    background-color: yellowgreen;
 }
 
 p.mensajeInfo {
@@ -213,4 +228,9 @@ div#volver {
 .botonVolver {
     width: 50px;
     height: 50px;
+}
+
+#botonBorrar {
+    width: 40px;
+    height: 30px;
 }

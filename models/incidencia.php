@@ -60,7 +60,7 @@
 
         public function insert($id_user, $fecha, $lugar, $equipo_afectado, $descripcion, $observaciones, $estado) {
             $this->db->query("INSERT INTO incidencias
-                                VALUES (null, '$fecha','$lugar','$equipo_afectado','$descripcion','$id_user','$observaciones','$estado');");
+                                VALUES (null, '$fecha','$lugar','$equipo_afectado','$descripcion','$id_user','$observaciones','$estado','media');");
             return $this->db->affected_rows;
         }
 

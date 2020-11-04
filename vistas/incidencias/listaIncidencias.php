@@ -45,7 +45,7 @@
         echo '</thead>';
         echo '<tbody class="cuerpoIncidencias">';
         foreach($data['listaIncidencias'] as $incidencia) {
-            echo '<tr>';
+            echo '<tr class="'.$incidencia->prioridad.'">';
             echo '<td>'. $incidencia->fecha .'</td>';
             echo '<td>'. $incidencia->lugar .'</td>';
             echo '<td>'. $incidencia->equipo_afectado .'</td>';
@@ -58,7 +58,8 @@
             echo '<td><a href="index.php?action=formModificarIncidencia&id_incidencia='.$incidencia->id_incidencia.'&id_user='.$_SESSION['id_user'].'">
                   <img src="imgs/button-edit.png" id="buttonEdit" alt="Modificar incidencia" title="Modificar incidencia"></a></td>';
             if ($_SESSION['rol_user'] == 1) {
-                echo '<td><a href="index.php?action=borrarIncidencia&id_incidencia='.$incidencia->id_incidencia.'&id_user='.$_SESSION['id_user'].'">Borrar</a></td>';
+                echo '<td><a href="index.php?action=borrarIncidencia&id_incidencia='.$incidencia->id_incidencia.'&id_user='.$_SESSION['id_user'].'">
+                  <img src="imgs/borrar.png" id="botonBorrar" alt="Borrar incidencia" title="Borrar incidencia"></a></td>';
             }
             echo '</tr>';
         }
