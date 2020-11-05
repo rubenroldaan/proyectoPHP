@@ -88,28 +88,34 @@
         }
 
         public function modificarIncidencia() {
-            $id_incidencia = $_REQUEST['id_incidencia'];
-            $fecha = $_REQUEST['fecha'];
-            $lugar = $_REQUEST['lugar'];
-            $equipo_afectado = $_REQUEST['equipo_afectado'];
-            $descripcion = $_REQUEST['descripcion'];
-            $observaciones = $_REQUEST['observaciones'];
-            $estado = $_REQUEST['estado'];
-            $prioridad = "";
-            if ($_SESSION['rol_user'] == 1)
-                $prioridad = $_REQUEST['prioridad'];
-            else
-                $prioridad = 'media';
+            if (isset($_SESSION['id_user'])) {
+                $id_incidencia = $_REQUEST['id_incidencia'];
+                $fecha = $_REQUEST['fecha'];
+                $lugar = $_REQUEST['lugar'];
+                $equipo_afectado = $_REQUEST['equipo_afectado'];
+                $descripcion = $_REQUEST['descripcion'];
+                $observaciones = $_REQUEST['observaciones'];
+                $estado = $_REQUEST['estado'];
+                $prioridad = "";
+                if ($_SESSION['rol_user'] == 1)
+                    $prioridad = $_REQUEST['prioridad'];
+                else
+                    $prioridad = 'media';
 
-            $result = $this->incidencia->update($id_incidencia,$fecha,$lugar,$equipo_afectado,$descripcion,$observaciones,$estado,$prioridad);
+                $result = $this->incidencia->update($id_incidencia,$fecha,$lugar,$equipo_afectado,$descripcion,$observaciones,$estado,$prioridad);
 
-            if ($result == 1) {
-                $data['msjInfo'] = "Incidencia modificada con éxito.";
+                if ($result == 1) {
+                    $data['msjInfo'] = "Incidencia modificada con éxito.";
+                } else {
+                    $data['msjError'] = "No se ha podido modificar la incidencia. Inténtelo de nuevo más tarde.";
+                }
+                $data['listaIncidencias'] = $this->incidencia->getAll();
+                $this->vista->mostrar("incidencias/listaIncidencias",$data);
             } else {
-                $data['msjError'] = "No se ha podido modificar la incidencia. Inténtelo de nuevo más tarde.";
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
             }
-            $data['listaIncidencias'] = $this->incidencia->getAll();
-            $this->vista->mostrar("incidencias/listaIncidencias",$data);
+            
         }
 
         public function borrarIncidencia() {
@@ -144,27 +150,31 @@
             }
         }
 
-        //HAY QUE AÑADIR LA PRIORIDAD
         public function nuevaIncidencia() {
-            $id_user = $_SESSION['id_user'];
-            $fecha = $_REQUEST['fecha'];
-            $lugar = $_REQUEST['lugar'];
-            $equipo_afectado = $_REQUEST['equipo_afectado'];
-            $descripcion = $_REQUEST['descripcion'];
-            $observaciones = $_REQUEST['observaciones'];
-            $estado = $_REQUEST['estado'];
+            if (isset($_SESSION['id_user'])) {
+                    $id_user = $_SESSION['id_user'];
+                    $fecha = $_REQUEST['fecha'];
+                    $lugar = $_REQUEST['lugar'];
+                    $equipo_afectado = $_REQUEST['equipo_afectado'];
+                    $descripcion = $_REQUEST['descripcion'];
+                    $observaciones = $_REQUEST['observaciones'];
+                    $estado = $_REQUEST['estado'];
 
-            $result = $this->incidencia->insert($id_user, $fecha, $lugar, $equipo_afectado, $descripcion, $observaciones, $estado);
+                    $result = $this->incidencia->insert($id_user, $fecha, $lugar, $equipo_afectado, $descripcion, $observaciones, $estado);
 
-            if ($result == 1) {
-                $data['msjInfo'] = "Incidencia creada con éxito";
+                    if ($result == 1) {
+                        $data['msjInfo'] = "Incidencia creada con éxito";
+                    } else {
+                        $data['msjError'] = "Ha ocurrido un error al crear la incidencia. Por favor, inténtelo más tarde";
+                    }
+
+                    $data['listaIncidencias'] = $this->incidencia->getAll();
+                    $this->mostrarListaIncidencias();
+                
             } else {
-                $data['msjError'] = "Ha ocurrido un error al crear la incidencia. Por favor, inténtelo más tarde";
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);  
             }
-
-            $data['listaIncidencias'] = $this->incidencia->getAll();
-             $this->mostrarListaIncidencias();
-
         }
 
         public function buscarIncidencia() {
@@ -303,6 +313,24 @@
 
                     $data['listaUsuarios'] = $this->user->getAll();
                     $this->vista->mostrar("user/listaUsuarios",$data);
+                } else {
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
+                }
+            } else {
+                $data['msjError'] = 'Debes iniciar sesión para continuar';
+                $this->vista->mostrar("user/formLogin", $data);
+            }
+        }
+
+        public function mostrarListaIncidenciasOrdenadas() {
+            if (isset($_SESSION['id_user'])) {
+                if ($_SESSION['rol_user'] == 1) {
+                    $campoParaOrdenar = $_REQUEST['campoOrden'];
+                    $tipoOrden = $_REQUEST['tipoOrden'];
+
+                    $data['listaIncidencias'] = $this->incidencia->getAllOrdenadas($campoParaOrdenar,$tipoOrden);
+                    $this->vista->mostrar("incidencias/listaIncidencias", $data);
                 } else {
                     $data['msjError'] = 'No tienes permisos para esta acción.';
                     $this->vista->mostrar("user/errorPermisos",$data);

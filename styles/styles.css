@@ -184,10 +184,12 @@ img#buttonEdit {
 }
 
 #crearIncidencia {
+    position: relative;
     display: inline;
 }
 
 .divSearch {
+    position: relative;
     float: right;
 }
 
@@ -256,4 +258,9 @@ div#volver {
 #botonCerrarIncidencia {
     width: 30px;
     height: 30px;
+}
+
+input.botonOrdenar {
+    width: 20px;
+    height: 20px;
 }

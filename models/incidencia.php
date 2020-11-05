@@ -39,6 +39,18 @@
             return $arrayResult;
         }
 
+        public function getAllOrdenadas($campo, $tipo) {
+            $arrayResult = array();
+            if ($result = $this->db->query("SELECT * FROM incidencias ORDER BY $campo $tipo")) {
+                while ($fila = $result->fetch_object()) {
+                    $arrayResult[] = $fila;
+                }
+            } else {
+                $arrayResult = null;
+            }
+            return $arrayResult;
+        }
+
         /**
          * Consulta todas las incidencias de un usuario en concreto.
          * @param id_user el ID del usuario del que queremos buscar sus incidencias.
