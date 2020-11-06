@@ -6,7 +6,7 @@
 
     class Controller {
         /**
-         * Constructor. Crea la variable vista
+         * Constructor. Instancia en objetos los diferentes modelos de la aplicación.
          */
 
         private $vista, $user, $incidencia;
@@ -17,7 +17,7 @@
         }
 
         /**
-         * Muestra el formulario de login para el inicio de sesión
+         * Muestra el formulario de login para el inicio de sesión.
          */
         public function formLogin() {
             if (!isset($_SESSION['id_user']))
@@ -26,6 +26,9 @@
                 $this->mostrarListaIncidencias();
         }
 
+        /**
+         * Toma los valores del formulario del login y busca el usuario. Si lo encuentra, lleva a la aplicación. Si no, da error.
+         */
         public function procesarLogin() {
             $usr = $_REQUEST['usr'];
             $passwd = $_REQUEST['passwd'];
@@ -42,12 +45,19 @@
             }
         }
 
+        /**
+         * Destruye las variables de sesión.
+         */
         public function cerrarSesion() {
             session_destroy();
             $data['msjInfo'] = 'Sesión cerrada correctamente';
             $this->vista->mostrar("user/formLogin", $data);
         }
 
+        /**
+         * Muestra la lista de las incidencias existentes. Si el usuario es administrador ve todas.
+         *  Si no, ve solo las suyas.
+         */
         public function mostrarListaIncidencias() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -64,6 +74,10 @@
             
         }
 
+        /**
+         * Muestra el formulario para modificar una incidencia. Comprueba si no eres administrador,
+         *  que la incidencia sea del mismo usuario.
+         */
         public function formModificarIncidencia() {
             if (isset($_SESSION['id_user'])) {
                 $id_incidencia = $_REQUEST['id_incidencia'];
@@ -87,6 +101,10 @@
             }
         }
 
+        /**
+         * Procesa los datos del formulario y envía la consulta SQL para modificar la incidencia.
+         * En caso de error, lo muestra por pantalla
+         */
         public function modificarIncidencia() {
             if (isset($_SESSION['id_user'])) {
                 $id_incidencia = $_REQUEST['id_incidencia'];
@@ -118,6 +136,10 @@
             
         }
 
+        /**
+         * Envía una consulta SQL para eliminar una incidencia. Si hay error,
+         * lo muestra por pantalla.
+         */
         public function borrarIncidencia() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -141,6 +163,9 @@
             }
         }
 
+        /**
+         * Muestra el formulario para añadir una nueva incidencia.
+         */
         public function formularioInsertarIncidencia() {
             if (isset($_SESSION['id_user'])) {
                 $this->vista->mostrar("incidencias/formularioInsertarIncidencias");
@@ -150,6 +175,10 @@
             }
         }
 
+        /**
+         * Recoge la información del formulario y envía una consulta SQL para crear la incidencia.
+         * En caso de error, lo muestra por pantalla.
+         */
         public function nuevaIncidencia() {
             if (isset($_SESSION['id_user'])) {
                     $id_user = $_SESSION['id_user'];
@@ -177,6 +206,10 @@
             }
         }
 
+        /**
+         * Recoge el texto introducido en el campo y realiza una consulta SQL en función de ese texto.
+         * En caso de no encontrar nada, devolverá un array vacío.
+         */
         public function buscarIncidencia() {
             $texto_busqueda = $_REQUEST['texto_busqueda'];
             $data['listaIncidencias'] = $this->incidencia->search($texto_busqueda);
@@ -184,10 +217,19 @@
             $this->vista->mostrar("incidencias/listaIncidencias",$data);
         }
 
+        /**
+         * Función que muestra una página con los créditos del creador.
+         * Actualmente sin usar porque no existe footer.
+         */
         public function creditos() {
             $this->vista->mostrar("creditos");
         }
 
+        /**
+         * Envía una consulta SQL para cerrar una incidencia. Esta consulta establece como
+         * cerrada tanto el estado como la prioridad. En caso de error, lo muestra
+         * por pantalla.
+         */
         public function cerrarIncidencia() {
             $id_incidencia = $_REQUEST['id_incidencia'];
 
@@ -201,6 +243,10 @@
             $this->mostrarListaIncidencias();
         }
 
+        /**
+         * Muestra una ventana con la lista de usuarios y sus respectivas funcionalidades.
+         * Solo se puede acceder si el usuario es administrador.
+         */
         public function gestionUsuarios() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -217,6 +263,9 @@
 
         }
 
+        /**
+         * Muestra un formulario para crear un nuevo usuario.
+         */
         public function formularioInsertarUsuario() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -231,29 +280,43 @@
             }
         }
 
+        /**
+         * Recoge los campos del formulario y envía una consulta SQL para crear un nuevo usuario. 
+         * En caso de error, lo muestra por pantalla.
+         */
         public function nuevoUsuario() {
             if (isset($_SESSION['id_user'])) {
-                $nombre = $_REQUEST['nombre'];
-                $passwd = $_REQUEST['passwd'];
-                $correo = $_REQUEST['correo'];
-                $rol = $_REQUEST['rol'];
+                if ($_SESSION['rol_user'] == 1) {
+                    $nombre = $_REQUEST['nombre'];
+                    $passwd = $_REQUEST['passwd'];
+                    $correo = $_REQUEST['correo'];
+                    $rol = $_REQUEST['rol'];
 
-                $result = $this->user->insert($nombre, $passwd, $correo, $rol);
+                    $result = $this->user->insert($nombre, $passwd, $correo, $rol);
 
-                if ($result == 1) {
-                    $data['msjInfo'] = 'Usuario creado con éxito';
+                    if ($result == 1) {
+                        $data['msjInfo'] = 'Usuario creado con éxito';
+                    } else {
+                        $data['msjError'] = 'No se ha podido crear el usuario. Inténtelo de nuevo más tarde.';
+                    }
+
+                    $data['listaUsuarios'] = $this->user->getAll();
+                    $this->vista->mostrar("user/listaUsuarios",$data);
                 } else {
-                    $data['msjError'] = 'No se ha podido crear el usuario. Inténtelo de nuevo más tarde.';
+                    $data['msjError'] = 'No tienes permisos para esta acción.';
+                    $this->vista->mostrar("user/errorPermisos",$data);
                 }
-
-                $data['listaUsuarios'] = $this->user->getAll();
-                $this->vista->mostrar("user/listaUsuarios",$data);
+                
             } else {
                 $data['msjError'] = 'Debes iniciar sesión para continuar';
                 $this->vista->mostrar("user/formLogin", $data);
             }
         }
 
+        /**
+         * Envía la consulta SQL necesaria para eliminar un usuario de la BD.
+         * En caso de error, lo muestra por pantalla.
+         */
         public function borrarUsuario() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -277,6 +340,10 @@
             
         }
 
+        /**
+         * Muestra un formulario rellenado para modificar la información de un usuario
+         * de la BD.
+         */
         public function formModificarUsuario() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -294,6 +361,10 @@
             }
         }
 
+        /**
+         * Recoge los campos del formulario y envía una consulta SQL para actualizar la
+         * información de un usuario de la BD.
+         */
         public function modificarUsuario() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
@@ -323,6 +394,9 @@
             }
         }
 
+        /**
+         * Recoge los valores de ordenación y envía la consulta con las incidencias ordenadas y las muestra.
+         */
         public function mostrarListaIncidenciasOrdenadas() {
             if (isset($_SESSION['id_user'])) {
                 if ($_SESSION['rol_user'] == 1) {
