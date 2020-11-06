@@ -48,6 +48,12 @@ h2.text-center {
     width: 200px;
 }
 
+#login .container input[type="password"] {
+    position: relative;
+    left: 30%;
+    width: 200px;
+}
+
 #login .container input[type="submit"] {
     width: 250px;
     position: relative;
