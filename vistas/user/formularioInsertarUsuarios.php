@@ -1,7 +1,7 @@
 <?php
     if (isset($_SESSION['id_user'])) {
         echo '<h2 class="text-center">Crear incidencia</h2>';
-        echo '<form action="index.php" method="get" class="formInsertar">
+        echo '<form action="index.php" method="post" class="formInsertar">
               Nombre: <br><input type="text" name="nombre"><br>
               Contraseña: <br><input type="password" name="passwd"><br>
               Correo: <br><input type="text" name="correo"><br><br>

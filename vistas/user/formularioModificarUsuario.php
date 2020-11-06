@@ -3,7 +3,7 @@
         $user = $data['user'];
         echo '<h2 class="text-center">Modificar Usuario</h2>';
 
-        echo '<form action="index.php" method="get" class="formUpdate">
+        echo '<form action="index.php" method="post" class="formUpdate">
                 <input type="hidden" name="id_user" value="'.$user->id_user.'">
                 <input type="hidden" name="action" value="modificarUsuario">
                 Nombre: <br><input type="text" name="nombre" value="'.$user->nombre.'" size="50"><br>

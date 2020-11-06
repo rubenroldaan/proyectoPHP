@@ -22,7 +22,7 @@
               </div>';
         if ($_SESSION['rol_user'] == 1) {
             echo '<div class="divOrdenar">
-                    <form class="formOrdenar" action="index.php">
+                    <form class="formOrdenar" action="index.php" method="post">
                     <input type="hidden" name="action" value="mostrarListaIncidenciasOrdenadas">
                     <select name="campoOrden">
                         <option value="id_incidencia" selected>Antiguedad</option>
@@ -45,7 +45,7 @@
 
 
             echo '<div class="divSearch">
-                    <form class="search" action="index.php">
+                    <form class="search" action="index.php" method="get">
                         <input type="text" class="inputBusqueda" name="texto_busqueda" placeholder="Búsqueda por fecha, lugar...">
                         <input type="hidden" name="action" value="buscarIncidencia">
                         <input type="image" title="Buscar" alt="Botón enviar" src="imgs/lupa.png" class="lupa">
@@ -96,7 +96,5 @@
             echo '<p style="color:red">No se han encontrado incidencias.</p>';
         }
         
-    } else {
-        
-        }   
+    }
         echo '</div>';

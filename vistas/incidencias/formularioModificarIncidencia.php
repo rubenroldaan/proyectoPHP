@@ -2,7 +2,7 @@
         $incidencia = $data['incidencia'];
         echo '<h2 class="text-center">Modificación de incidencia</h2>';
 
-        echo '<form action="index.php" method="get" class="formUpdate">
+        echo '<form action="index.php" method="post" class="formUpdate">
                 <input type="hidden" name="id_incidencia" value="'.$incidencia->id_incidencia.'">
                 <input type="hidden" name="action" value="modificarIncidencia">
                 Fecha: <br><input type="date" name="fecha" value="'.$incidencia->fecha.'"><br>
@@ -35,4 +35,3 @@
                 echo '<br><br>';
                 echo '<input type="submit" value="Modificar incidencia">
                </form>';
-?>

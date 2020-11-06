@@ -1,7 +1,7 @@
 <?php
     if (isset($_SESSION['id_user'])) {
         echo '<h2 class="text-center">Crear incidencia</h2>';
-        echo '<form action="index.php" method="get" class="formInsertar">
+        echo '<form action="index.php" method="post" class="formInsertar">
                 Fecha: <br><input type="date" name="fecha"><br>
                 Lugar: <br><input type="text" name="lugar"><br>
                 Equipo afectado: <br><input type="text" name="equipo_afectado"><br>
