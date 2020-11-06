@@ -93,7 +93,7 @@
                         }
                     }
                 } else {
-                    $this->vista->mostrar("incidencias/listaIncidencias");
+                    $this->mostrarListaIncidencias();
                 }
             } else {
                 $data['msjError'] = 'Debes iniciar sesión para continuar';
@@ -127,8 +127,7 @@
                 } else {
                     $data['msjError'] = "No se ha podido modificar la incidencia. Inténtelo de nuevo más tarde.";
                 }
-                $data['listaIncidencias'] = $this->incidencia->getAll();
-                $this->vista->mostrar("incidencias/listaIncidencias",$data);
+                $this->mostrarListaIncidencias();
             } else {
                 $data['msjError'] = 'Debes iniciar sesión para continuar';
                 $this->vista->mostrar("user/formLogin", $data);
@@ -150,8 +149,7 @@
                     else
                         $data['msjError'] = 'No se ha podido eliminar la incidencia. Inténtalo más tarde';
                 
-                $data['listaIncidencias'] = $this->incidencia->getAll();
-                $this->vista->mostrar("incidencias/listaIncidencias",$data);
+                        $this->mostrarListaIncidencias();
                 } else {
                     $data['msjError'] = 'No tienes permisos para realizar esa acción';
                     $this->vista->mostrar("user/errorPermisos",$data);
